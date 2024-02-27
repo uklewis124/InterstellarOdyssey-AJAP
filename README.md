@@ -15,4 +15,4 @@ But will they be able to save each planet in time? And what secrets lie at the h
 
 This game is a simple text-based adventure game. When you reach a new 'interaction' style.
 
-If you get stuck somewhere, You can check out our [wiki](https://github.com/uklewis124/Game/wiki) for some help!
+If you get stuck somewhere, You can check out our [wiki](https://github.com/uklewis124/InterstellarOdyssey-AJAP/wiki) for some help!
