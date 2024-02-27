@@ -16,7 +16,7 @@ def clear():
 def wait(length=2.6):
     time.sleep(length)
 
-def speak(char, text, delay=0.05, wait_tog=True):    
+def speak(char, text, delay=0.00, wait_tog=True):    
     # DEBUG:
     debug = False
     if debug:
@@ -53,7 +53,7 @@ def speak(char, text, delay=0.05, wait_tog=True):
     # If not a character and white      
     if char == "White" and not complete:
         for letter in text:
-            sys.stdout.write(f"{characters[char]['Color']}{letter}", end = "")
+            sys.stdout.write(f"{characters[char]['Color']}{letter}")
             sys.stdout.flush()
             time.sleep(delay)
         print()
@@ -61,27 +61,28 @@ def speak(char, text, delay=0.05, wait_tog=True):
     # If not a character and not white ("Think")
     if char == "Think" and not complete:
         if not complete:
-            print(f"{characters[char]['Color']}", '"', end="")
+            print(f"{characters[char]['Color']}" + '"', end="")
             for letter in text:
-                sys.stdout.write(f"{letter}")
+                sys.stdout.write(characters[char]['Color'] + letter)
                 sys.stdout.flush()
                 time.sleep(delay)
-            sys.stdout.write('"')
+            sys.stdout.write(characters[char]['Color'] + '"')
             sys.stdout.flush()
             time.sleep(delay)
             print()
             complete = True
     # If stage
-    else:
+    elif char == "Stg":
         if not complete:
-            print(f"{characters[char]['Color']}", end="")
-            print(Fore.RED, text)
+            print("", end="")
             for letter in text:
-                sys.stdout.write(letter)
+                sys.stdout.write(characters[char]['Color'] + letter)
                 sys.stdout.flush()
                 time.sleep(delay)
             print()
             complete = True
+
+
     
     if complete:
         # WAITING
