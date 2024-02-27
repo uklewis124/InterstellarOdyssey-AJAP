@@ -13,16 +13,21 @@ colorama.init(autoreset=True)
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-def wait(length=2.7):
+def wait(length=2.6):
     time.sleep(length)
 
-def prin(arg):
-    print(arg)
-    wait()
-
-def speak(char, text, delay=0.05):
+def speak(char, text, delay=0.05, wait_tog=True):    
+    # DEBUG:
+    debug = False
+    if debug:
+        print(Fore.MAGENTA, char, " | ", "Character")
+        print(Fore.MAGENTA, text, " | ", "Text")
+        print(Fore.MAGENTA, delay, " | ", "Delay")
+    
+    # TYPE TRUE = NOT A CHARACTER
     characters = {
         "You": {"Color": Fore.CYAN, "Type": False},
+        player.name: {"Color": Fore.CYAN, "Type": False},
         "??": {"Color": Fore.RED, "Type": False},
         "A group of people": {"Color": Fore.RED, "Type": False},
         
@@ -31,12 +36,11 @@ def speak(char, text, delay=0.05):
         "2": {"Color": Fore.YELLOW, "Type": False},
         
         "Stg": {"Color": Fore.RED, "Type": True},
-        "Think": {"Color": Fore.GREEN, "Type": True},
+        "Think": {"Color": f"{Fore.GREEN}{Style.BRIGHT}", "Type": True},
         "White": {"Color": Fore.WHITE, "Type": True}
     }
-    
     complete = False
-    
+    # If a character
     if not characters[char]["Type"]:
         if char in characters:
             print(f"{characters[char]['Color']}{char} | ", end="")
@@ -46,22 +50,50 @@ def speak(char, text, delay=0.05):
                 time.sleep(delay)
             print()
             complete = True
-            
-    if characters[char]["Color"] == Fore.WHITE and not complete:
+    # If not a character and white      
+    if char == "White" and not complete:
         for letter in text:
-            sys.stdout.write(f"{characters[char]['Color']}{letter}")
+            sys.stdout.write(f"{characters[char]['Color']}{letter}", end = "")
             sys.stdout.flush()
             time.sleep(delay)
         print()
         complete = True
+    # If not a character and not white ("Think")
+    if char == "Think" and not complete:
+        if not complete:
+            print(f"{characters[char]['Color']}", '"', end="")
+            for letter in text:
+                sys.stdout.write(f"{letter}")
+                sys.stdout.flush()
+                time.sleep(delay)
+            sys.stdout.write('"')
+            sys.stdout.flush()
+            time.sleep(delay)
+            print()
+            complete = True
+    # If stage
     else:
         if not complete:
-            print(f"{characters[char]['Color']}")
+            print(f"{characters[char]['Color']}", end="")
+            print(Fore.RED, text)
             for letter in text:
-                sys.stdout.write(f"{characters[char]['Color']}{letter}")
+                sys.stdout.write(letter)
                 sys.stdout.flush()
                 time.sleep(delay)
             print()
+            complete = True
+    
+    if complete:
+        # WAITING
+        if wait_tog == True:
+            wait()
+        elif wait_tog != False:
+            wait(wait_tog)
+        # If specifically told not to wait
+        else:
+            pass
+            
+        
 
 def proceed():
     input(f"{Fore.RED}Press Enter to continue...")
@@ -75,13 +107,13 @@ player = Player()
 ## START OF DAY 1 ##
 
 print("")
-speak("Stg", "Day ?? - Where am I?")
-print(f"{Fore.RED}=====================")
+speak("Stg", "Day ?? - Where am I?", wait_tog = False)
+speak("Stg", "=====================")
 print("")
 
 time.sleep(2)
 
-speak("Think", "Huh?   Where am I?")
+"""speak("Think", "Huh?   Where am I?")
 wait()
 speak("Think", "I don't remember a th-")
 time.sleep(5)
@@ -127,9 +159,9 @@ wait()
 speak("Stg", "You notice a set of clothes on the bed.")
 wait()
 speak("Stg", "You change into the clothes, They fit perfectly.")
-proceed()
+proceed()"""
 
-# Searching the room
+"""# Searching the room
 speak("Stg", "You look around the room.")
 wait()
 speak("Stg", "It's a small room, with a bed, a table, and a chair.")
@@ -142,7 +174,6 @@ speak("Stg", "You notice a small keyhole in the door.")
 wait()
 ## ASK IF TRY DOOR
 speak("Stg", "Do you try the door?")
-wait()
 speak("Stg", "1. Yes")
 speak("Stg", "2. No")
 wait()
@@ -153,44 +184,34 @@ while not complete:
     openthedoor = input(">> ")
     if openthedoor == "1":
         speak("Stg", "You try the door, but it's locked.")
-        wait()
         speak("Stg", "You'll need a key to open it.")
-        wait()
         speak("Stg", "You decide to look around the room.")
-        wait()
+        complete = True
     elif openthedoor == "2":
         speak("Stg", "You decide to look around the room.")
-        wait()
+        complete = True
     else:
-        speak("Stg", "You might want to try that again.")
+        speak("Stg", "You might want to try that again.")"""
     
 # Continuing searching the room
-speak("Stg", "You notice a sleek wardrobe hidden in the corner of the room.")
-wait()
+"""speak("Stg", "You notice a sleek wardrobe hidden in the corner of the room.")
 speak("Stg", "You open the wardrobe.")
-wait()
 speak("Stg", "Inside, you find a set of keys.")
-wait()
 speak("Stg", "You take the keys.")
-wait(4)  # Dramatic Effect
+speak("Stg", "                                                                                                ")
 
 speak("??", "Huh!?  Leaving so soon?")
-wait()
 speak("Stg", "The figure from earlier stands in the doorway.")
-wait()
 speak("??", "I realised I never introduced myself.")
-wait()
 speak("??", "How rude of me.   My name is Ana.")
-wait()
 speak("Stg", "Ana smiles warmly.")
-wait()
 speak("Ana", "What's your name?")
-wait()
+"""
 
 # Getting players name
-speak("You", "My mame is...")
+speak("You", "My name is...")
 player.name = input(">> ")
-speak("You", f"{player.name}.")
+speak(player.name, f"{player.name}.", wait_tog = False)
 proceed()
 
 speak("Ana", f"Well, {player.name}, it's a pleasure to meet you.")
@@ -199,9 +220,13 @@ speak("Ana", "I hope you're feeling better.")
 wait()
 speak("Ana", "I'm sure you have a lot of questions.")
 wait()
+speak("Think", "You can say that again...")
+wait()
 speak("Ana", "I'll answer what I can.")
 wait()
 speak("Ana", "But first, I have something to show you.")
+wait()
+speak(player.name, "Huh?           ")
 wait()
 speak("Ana", "Come with me.")
 wait(5)
@@ -215,6 +240,12 @@ speak("Stg", "The hallway is lined with doors,   at least a dozen on each side."
 wait()
 speak("Stg", "No two doors are the same,   and they all have weird symbols on them.")
 wait()
-speak("??", "No way.. It's the lo-")
+speak("??", "psswsspsss")
 wait()
-speak("??", "-st one!")
+speak("Stg", "You hear a bunch of whispers coming from behind two large doors at the end of the hallway.")
+wait()
+speak("Stg", "As you approach, the whispers grow louder and louder")
+wait(1)
+speak("Stg", "Until...")
+wait(5)
+speak("??", "Shyou ")
