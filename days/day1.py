@@ -107,7 +107,7 @@ class Player:
 player = Player()
 ## START OF DAY 1 ##
 
-"""print("")
+print("")
 speak("Stg", "Day ?? - Where am I?", wait_tog = False)
 speak("Stg", "=====================", wait_tog = False)
 print("")
@@ -132,7 +132,7 @@ speak("??", "I've made you some breakfast. You must be hungry.")
 speak("Stg", "The figure hands you a plate of eggs and bacon.")
 speak("??", "I'm sure you have a lot of questions.  I'll answer what I can.")
 speak("??", "But first, eat up.  You'll need your strength.", wait_tog = 5)
-proceed()"""
+proceed()
 
 speak("Stg", """
 You eagerly dig into the breakfast, your stomach grumbling as you realize just how hungry you are. The eggs are
