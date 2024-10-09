@@ -1,3 +1,5 @@
+### DEPRECIATED
+
 # Interstellar Odyssey: A Journey Across Planets
 
 In a vast and uncharted corner of the galaxy, a lone traveler wakes up each day on a new and unfamiliar planet. With no memory of how they got there or who they are, they find themselves tasked with a crucial mission—to save the planet they awaken on before it's too late.
